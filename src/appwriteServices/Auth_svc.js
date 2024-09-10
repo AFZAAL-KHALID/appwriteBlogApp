@@ -6,9 +6,9 @@ export class AuthService {
   account;
 
   constructor() {
-    this.Client.setEndpoint(Conf.appwriteUrl).setProject(
-      Conf.appwriteProjectId
-    );
+    this.Client
+        .setEndpoint(Conf.appwriteUrl)
+        .setProject(Conf.appwriteProjectId);
     this.account = new Account(this.Client);
   }
   //my functions
@@ -21,9 +21,12 @@ export class AuthService {
         name
       );
       if (userAccount) {
+        return userAccount;
         // call another method like login
       } else {
-        return userAccount;
+        // return userAccount;
+        console.log("sorry some problem accurd");
+
         //will see later
       }
     } catch (error) {
@@ -31,9 +34,34 @@ export class AuthService {
     }
   }
 
-  async login({email, password}){
+  async login({ email, password }) {
     try {
-        await this.account.account.createEmailPasswordSession('email', 'password');
+      return await this.account.createEmailPasswordSession( "email",  "password"
+      );
+
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getCurrentUser(){
+        try {
+           const userSessionValid =  await this.account.get()
+          if (userSessionValid) {
+            return userSessionValid
+          }  else{
+            return null
+          }
+        } catch (error) {
+            throw error
+        }
+  }
+
+  async logOut(){
+    try {
+      return  await account.deleteSessions();
+
     } catch (error) {
         throw error
     }
