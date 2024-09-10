@@ -79,7 +79,41 @@ export class databaseAndBucket_SVCS {
         ) 
      } 
 
-// file upload service
+// file upload service    should be seperately
+     async uploadFile (file){
+        try {
+          return  await this.bucket.createFile(
+                Conf.appwriteBucketId,
+                ID.unique(),
+                file
+            )
+        } catch (error) {
+            throw error;
+            return false
+        }
+     }
+
+     async deleteFile(fileId){
+        try {
+         return await this.bucket.deleteFile(
+            Conf.appwriteBucketId,
+            fileId
+         )
+        } catch (error) {
+            throw error
+        }
+     }
+
+     async previewFile(fileId){
+        try {
+            return this.bucket.getFilePreview(
+                Conf.appwriteBucketId,
+                fileId
+            )
+        } catch (error) {
+            throw error
+        }
+     }
 }
 
 
