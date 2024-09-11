@@ -1,4 +1,4 @@
-import React, {forwardRef, useId} from 'react'
+import React, {useId} from 'react'
 
 const Input = ({
     lable,
@@ -23,4 +23,4 @@ const Input = ({
   )
 }
 
-export default forwardRef(Input) 
+export default React.forwardRef(Input)
