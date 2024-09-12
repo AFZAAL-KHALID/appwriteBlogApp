@@ -7,7 +7,7 @@ import LoginCompnt from './LoginCompnt.jsx'
 import AuthLayout from "./AuthLayout.jsx";
 import PostCard from "./PostCard.jsx";
 import SelectCompnt from "./SelectCompnt.jsx";
-
+import RTE from "./RTE.JSX";
 export {
     Header,
     Footer,
@@ -17,5 +17,6 @@ export {
     LoginCompnt,
     AuthLayout,
     PostCard,
-    SelectCompnt
+    SelectCompnt,
+    RTE
 }
