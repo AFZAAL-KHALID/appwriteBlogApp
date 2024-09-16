@@ -12,10 +12,11 @@ const RTE = ({ lable, name, control, defaultValue = "" }) => {
         control={control}
         render={({ field: { onChange } }) => (
           <Editor
+          apiKey='9brfoqgj62mtutuzkf1pa1keiwkvu54239l4g5cby22licgb'
             initialValue={defaultValue}
             init={{
               initialValue: defaultValue,
-              height: 500,
+              height: 350,
               menubar: true,
               plugins: [
                 "image",

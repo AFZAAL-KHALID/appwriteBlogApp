@@ -14,17 +14,22 @@ export class databaseAndBucket_SVCS {
     this.bucket = new Storage(this.client);
      }
 // My function    1st CreteDocuments 
-     async createPost(slug, title, content, featuredImage, status, userId){
+     async createPost({title, slug, content, featuredImage, status, userID}){
        try {
-        await this.databases.createDocument(
+        const response = await this.databases.createDocument(
             Conf.appwriteDatabaseId,
             Conf.appwriteCollectionId, 
             slug, //as a unique Id
-            {title, slug, content, featuredImage, status, userId}
+            {title, content, featuredImage, status, userID}
         )
+        if (response) {
+            console.log('new document created', response);
+            return response
+        }
 
        } catch (error) {
-        throw error
+        console.log('error in creating post/Document',error);
+        
        }
      }
 
@@ -79,17 +84,20 @@ export class databaseAndBucket_SVCS {
         ) 
      } 
 
-// file upload service    should be seperately
+// file upload service    (idioly should be seperately)
      async uploadFile (file){
         try {
-          return  await this.bucket.createFile(
+          const response = await this.bucket.createFile(
                 Conf.appwriteBucketId,
                 ID.unique(),
                 file
             )
+            if (response) {
+                console.log('response successfully:', response);
+                return response
+            }
         } catch (error) {
-            throw error;
-            return false
+           console.log('File upload failed:', error.message);
         }
      }
 
@@ -104,15 +112,11 @@ export class databaseAndBucket_SVCS {
         }
      }
 
-     async previewFile(fileId){
-        try {
+     previewFile(fileId){
             return this.bucket.getFilePreview(
                 Conf.appwriteBucketId,
                 fileId
             )
-        } catch (error) {
-            throw error
-        }
      }
 }
 

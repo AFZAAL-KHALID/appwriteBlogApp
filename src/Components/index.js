@@ -7,7 +7,10 @@ import LoginCompnt from './LoginCompnt.jsx'
 import AuthLayout from "./AuthLayout.jsx";
 import PostCard from "./PostCard.jsx";
 import SelectCompnt from "./SelectCompnt.jsx";
-import RTE from "./RTE.JSX";
+import RTE from "./RTE.jsx";
+import SignupComponent from './SignupComponent.jsx'
+import PostForm from '../Components/PostForm/PostForm.jsx'
+
 export {
     Header,
     Footer,
@@ -18,5 +21,7 @@ export {
     AuthLayout,
     PostCard,
     SelectCompnt,
-    RTE
+    RTE,
+    SignupComponent,
+    PostForm,
 }

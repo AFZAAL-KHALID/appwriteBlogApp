@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const Header = () => {
   const storeStatus = useSelector((state)=> state.auth.status)
-  // const navigate = useNavigate() FIXME:  
+  const navigate = useNavigate()
 
   const navItems = [
     {
@@ -40,8 +40,8 @@ const Header = () => {
   return (
     <header className='py-3 shadow-md bg-gray-500/30'>
       <Container>
-        <nav>
-          <ul className="ml-[20%] flex gap-4">
+        <nav className=' w-full justify-center flex items-center'>
+          <ul className=" flex gap-4">
           {navItems.map((item, index)=>(
             item.active &&
             <li key={index} className=''>

@@ -2,6 +2,7 @@ import Conf from "../Conf-env/Conf.js";
 import { Client, Account, ID } from "appwrite";
 
 export class AuthService {
+ 
   Client = new Client();
   account;
 
@@ -21,13 +22,14 @@ export class AuthService {
         name
       );
       if (userAccount) {
-        return userAccount;
-        // call another method like login
+        console.log(userAccount);
+      //   // call another method like login
+        return this.login({email, password})
+        
       } else {
-        // return userAccount;
-        console.log("sorry some problem accurd");
+        return userAccount;
 
-        //will see later
+      //   //will see later
       }
     } catch (error) {
       throw error;
@@ -36,7 +38,7 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      return await this.account.createEmailPasswordSession( "email",  "password"
+      return await this.account.createEmailPasswordSession( email,  password
       );
 
 
@@ -47,20 +49,18 @@ export class AuthService {
 
   async getCurrentUser(){
         try {
-           const userSessionValid =  await this.account.get()
-          if (userSessionValid) {
-            return userSessionValid
-          }  else{
-            return null
-          }
+          return await this.account.get();
+          
         } catch (error) {
-            throw error
+            console.log('error occur in getCurrentUser:', error);
         }
+        
+        return null;
   }
 
   async logOut(){
     try {
-      return  await account.deleteSessions();
+      return  await this.account.deleteSessions();
 
     } catch (error) {
         throw error

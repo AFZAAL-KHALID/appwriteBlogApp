@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const PostForm = (post) => {
-  const navigate = useNavigate();
-  const userDataInStore = useSelector((state) => {
-    state.auth.status;
-  });
+  const navigate = useNavigate(); 
+  const userDataInStore = useSelector((state) => 
+    state.auth.userData
+  );
+  
 
   const { register, handleSubmit, watch, getValues, setValue, control } =
     useForm({
@@ -22,10 +23,12 @@ const PostForm = (post) => {
     });
 
   const submitFunction = async (data) => {
-    //first new img add and prev delete 📸
+    console.log(data.image[0]);
+    
+    // first new img add and prev delete 📸
     if (post) {
-      const file = data.Image[0]
-        ? await databaseSvcs.uploadFile(data.Image[0])
+      const file = data.image[0]
+        ? await databaseSvcs.uploadFile(data.image[0])
         : null;
 
       if (file) {
@@ -41,21 +44,26 @@ const PostForm = (post) => {
         navigate(`/post/${dbPost.$id}`);
       }
     }
-    //if no prev POST exist.
-    else {
-      const file = data.Image[0]
-        ? await databaseSvcs.uploadFile(data.Image[0])
-        : null;
-    }
+    //if no prev POST exist so run this.
+    else 
+    console.log(data.image[0]);
+    
+      const file = await databaseSvcs.uploadFile(data.image[0]);
+      
+      
     if (file) {
-      const fileID = file.$id;
-      data.featuredImage = fileID;
+      console.log('file has been saved: ', file.$id);
+      
+      const fileId = file.$id; 
+      data.featuredImage = fileId;
       const dbpost = await databaseSvcs.createPost({
         ...data,
-        userId: userData.$id,
+        userID: userDataInStore.$id,
       });
 
       if (dbpost) {
+        console.log('document created successfully');
+        
         navigate(`/post/${dbpost.$id}`);
       }
     }
@@ -84,12 +92,13 @@ const PostForm = (post) => {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submitFunction)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form onSubmit={handleSubmit(submitFunction)} className="flex flex-wrap text-black">
+      {/* //⬅️<<<------------- */}
+      <div className="w-2/3 px-2"> 
         <Input
-          label="Title :"
-          placeholder="Title"
-          className="mb-4"
+          label={"Title :"}
+          placeholder={"Title"}
+          className={"mb-4 rounded-md pl-2 py-2"}
           {...register("title", { required: true })}
         />
         <Input
@@ -120,32 +129,31 @@ const PostForm = (post) => {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
-        {post && (
+        //FIXME: 
+         {post && (
           <div className="w-full mb-4">
             <img
-              src={appwriteService.getFilePreview(post.featuredImage)}
+              src={databaseSvcs.previewFile(post.featuredImage)}
               alt={post.title}
               className="rounded-lg"
             />
           </div>
-        )}
+        )} 
         <SelectCompnt
           options={["active", "inactive"]}
           label="Status"
           className="mb-4"
           {...register("status", { required: true })}
         />
-        //FIXME:⤵️
-        <Button
+        <button
           type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
+          className={`${post ? "bg-green-500" : "bg-blue-700"} p-2 rounded-lg mt-2 text-white w-full`}
         >
           {post ? "Update" : "Submit"}
-        </Button>
+        </button>
       </div>
     </form>
   );
-};
+}
 
-export default PostForm;
+export default PostForm

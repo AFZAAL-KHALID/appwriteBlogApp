@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import {logIn, logOut} from './Store/Authslice'
 import authservice from './appwriteServices/Auth_svc'
 import {Header, Footer} from './Components/index'
-// import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 const App = () => {
   const [loading, setloading] = useState(true)
@@ -13,9 +13,11 @@ const App = () => {
     authservice.getCurrentUser()
     .then((userData)=>{
       if (userData) {
-        useDispatch(logIn({userData}))
+        console.log(userData);
+        
+        dispatch(logIn({userData}))
       }else{
-        useDispatch(logOut())
+        dispatch(logOut())
       }
     })
     .finally(() => {setloading(false)}
@@ -27,7 +29,7 @@ const App = () => {
     !loading ? (
       <div className='min-h-screen w-full bg-red-500 flex flex-col justify-between text-white flex-wrap'>
         <Header/>
-          {/* <Outlet/> */} TODO:
+          <Outlet/>
         <Footer/>
       </div>
     ) : (
