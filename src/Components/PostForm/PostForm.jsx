@@ -5,23 +5,24 @@ import databaseSvcs from "../../appwriteServices/database_svc";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const PostForm = (post) => {
+const PostForm = ({post}) => {
+  const { register, handleSubmit, watch, getValues, setValue, control } =
+    useForm({
+      defaultValues: {
+        title: post?.title || "",
+        slug: post?.$id || "",
+        content: post?.content || "",
+        status: post?.status || "active",
+      },
+    });
+
   const navigate = useNavigate(); 
   const userDataInStore = useSelector((state) => 
     state.auth.userData
   );
   
 
-  const { register, handleSubmit, watch, getValues, setValue, control } =
-    useForm({
-      defaultValues: {
-        title: post?.title || "",
-        slug: post?.slug || "",
-        content: post?.content || "",
-        status: post?.status || "active",
-      },
-    });
-
+   
   const submitFunction = async (data) => {
     console.log(data.image[0]);
     
@@ -129,13 +130,12 @@ const PostForm = (post) => {
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
-        //FIXME: 
          {post && (
           <div className="w-full mb-4">
             <img
               src={databaseSvcs.previewFile(post.featuredImage)}
               alt={post.title}
-              className="rounded-lg"
+              className="rounded-lg h-[35vh]"
             />
           </div>
         )} 

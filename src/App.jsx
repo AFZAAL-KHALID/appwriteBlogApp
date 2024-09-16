@@ -13,7 +13,6 @@ const App = () => {
     authservice.getCurrentUser()
     .then((userData)=>{
       if (userData) {
-        console.log(userData);
         
         dispatch(logIn({userData}))
       }else{

@@ -6,25 +6,29 @@ import databaseSvcs from "../appwriteServices/database_svc";
 import { Container, PostForm } from "../Components/index";
 
 const EditPost = () => {
-  const [post, setpost] = useState(null);
-  const navigate = useNavigate();
+  const [post, setposts] = useState(null);
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    databaseSvcs.getPost(slug).then((post) => {
-     if (post) {
-         setpost(post);
-     }else{
-        navigate('/')
-     }
-    });
+    if (slug) {
+      databaseSvcs.getPost(slug).then((data) => {
+        if (data) {
+          setposts(data)
+        }
+      })
+    } else {
+      navigate("/")
+    }
   }, [slug, navigate]);
-
+  
+  
   return post ? (
-
+    <div className="py-8 bg-yellow-400 w-full">
     <Container>
       <PostForm post={post} />
     </Container>
+    </div>
   ) : null;
 };
 

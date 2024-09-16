@@ -12,7 +12,8 @@ export default function Post() {
 
     const userData = useSelector((state) => state.auth.userData);
 
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
+    const isAuthor = true
+    // post && userData ? post.userId === userData.$id : false; FIXME:⬅️
 
     useEffect(() => {
         if (slug) {
@@ -35,7 +36,7 @@ export default function Post() {
     return post ? (
         <div className="py-8">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+                <div className="w-full bg-gray-300 flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
                         src={databaseSvcs.previewFile(post.featuredImage)}
                         alt={post.title}
@@ -45,13 +46,13 @@ export default function Post() {
                     {isAuthor && (
                         <div className="absolute right-6 top-6">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <button bgColor="bg-green-500" className="mr-3">
                                     Edit
-                                </Button>
+                                </button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+                            <button bgColor="bg-red-500" onClick={deletePost}>
                                 Delete
-                            </Button>
+                            </button>
                         </div>
                     )}
                 </div>
