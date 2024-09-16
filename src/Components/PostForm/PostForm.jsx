@@ -145,12 +145,14 @@ const PostForm = ({post}) => {
           className="mb-4"
           {...register("status", { required: true })}
         />
+
         <button
           type="submit"
           className={`${post ? "bg-green-500" : "bg-blue-700"} p-2 rounded-lg mt-2 text-white w-full`}
         >
           {post ? "Update" : "Submit"}
         </button>
+        
       </div>
     </form>
   );

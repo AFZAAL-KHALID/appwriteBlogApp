@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { logIn } from "../Store/Authslice";
+import { logIn } from "../Store/authslice.js";
 import { Input } from "./index.js";
 import { useDispatch } from "react-redux";
 import authservice from "../appwriteServices/Auth_svc";
@@ -11,20 +11,23 @@ const SignupComponent = () => {
   const { register, handleSubmit } = useForm();
 
   const signupHandler = async (data) => {
-    const {email, password, name} = data
+    const { email, password, name } = data;
     try {
-      const userData = await authservice.createAccount({ email, password, name });
+      const userData = await authservice.createAccount({
+        email,
+        password,
+        name,
+      });
 
       if (userData) {
         const userdata = await authservice.getCurrentUser();
         if (userdata) {
-            console.log(userData);
-            
+          console.log(userData);
+
           dispatch(logIn(userdata));
           navigate("/");
         }
       }
-     
     } catch (error) {
       throw error;
     }
@@ -57,7 +60,7 @@ const SignupComponent = () => {
                 required: true,
               })}
             />
-           
+
             <Input
               label={"Email: "}
               type={"email"}
