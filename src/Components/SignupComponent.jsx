@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { logIn } from "../Store/authSlice.js";
+import { logIn } from "../Store/AuthSlice.js";
 import { Input } from "./index.js";
 import { useDispatch } from "react-redux";
 import authservice from "../appwriteServices/Auth_svc";
