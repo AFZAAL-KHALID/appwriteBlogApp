@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from './authslice.js'
+import authSlice from './Authslice.js'
 
 
 const Store = configureStore({
