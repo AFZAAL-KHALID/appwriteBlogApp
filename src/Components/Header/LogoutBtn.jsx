@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logOut } from "../../Store/AuthSlice";
+import { logOut } from "../../Store/authSlice";
 import authservice from "../../appwriteServices/Auth_svc";
 import { IoIosLogOut } from "react-icons/io"; //icon
 
